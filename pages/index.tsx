@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Joi from "joi";
 import axios from "axios";
 import Link from "next/link";
+import { Oval } from "react-loader-spinner";
 
 const schema = Joi.object({
   email: Joi.string()
@@ -15,6 +16,7 @@ const schema = Joi.object({
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
   const [link, setLink] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const CheckLinkValidity = async () => {
     const response = schema.validate({ email });
@@ -24,6 +26,7 @@ const Home: NextPage = () => {
     }
 
     try {
+      setLoading(true);
       const response = await axios.get("https://aplb.xyz/celcat/getCalendar", {
         params: {
           name: email,
@@ -32,6 +35,7 @@ const Home: NextPage = () => {
           return true;
         },
       });
+      setLoading(false);
       if (response.status === 200) {
         setLink("https://aplb.xyz/celcat/getCalendar?name=" + email);
         toast.success("Success");
@@ -88,12 +92,22 @@ const Home: NextPage = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <button
-          className="w-[175px] h-[50px] bg-blue-600 text-white ml-5 rounded-md"
+          className="w-[175px] h-[50px] bg-blue-600 text-white ml-5 rounded-md flex items-center justify-center"
           onClick={() => {
             CheckLinkValidity();
           }}
         >
-          Generate Calendar
+          {loading ? (
+            <Oval
+              width={22}
+              height={22}
+              strokeWidth={6}
+              color={"#ffffff"}
+              secondaryColor={"#fefefe"}
+            />
+          ) : (
+            <span>Generate Calendar</span>
+          )}
         </button>
       </main>
     </div>
