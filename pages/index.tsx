@@ -4,7 +4,6 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Joi from "joi";
 import axios from "axios";
-import Link from "next/link";
 import { Oval } from "react-loader-spinner";
 
 const schema = Joi.object({
@@ -47,7 +46,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div>
+    <div className="w-full h-screen">
       <Toaster position="top-center" reverseOrder={false} />
       <Head>
         <title>Celcat ICS</title>
@@ -78,53 +77,61 @@ const Home: NextPage = () => {
               Copy and paste this into your respective calendar or download the
               ICS file by going to the url.
             </p>
-            {/* <h2>Want to add it to your calendar?</h2>
-            <div className="flex">
-              <Link href={"https://calendar.google.com/calendar/u/0/r?cid=webcal%3A%2F%2Fical.befunky.in%2Fical%2Fbefunky.ics"}>
-                <a>
-                  <button className="bg-blue-500 text-white rounded-md px-4 py-2 mt-4">
-                    Google Calendar
-                  </button>
-                </a>
-              </Link>
-            </div> */}
           </div>
           <div className="w-full h-screen fixed top-0 left-0 bg-black opacity-40" />
         </div>
       ) : null}
 
-      <main className="flex items-center justify-center w-full h-screen flex-col sm:flex-row px-5">
-        <input
-          className="w-full sm:w-[400px] h-[50px] border-2 pl-4 rounded-md"
-          type={"text"}
-          placeholder={"Enter your Northeastern Email"}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              CheckLinkValidity();
-            }
-          }}
-        />
-        <button
-          className="w-full mt-5 sm:mt-0 sm:w-[175px] h-[50px] bg-blue-600 text-white sm:ml-5 rounded-md flex items-center justify-center"
-          onClick={() => {
-            CheckLinkValidity();
-          }}
-        >
-          {loading ? (
-            <Oval
-              width={22}
-              height={22}
-              strokeWidth={6}
-              color={"#ffffff"}
-              secondaryColor={"#fefefe"}
+      <main className="flex items-center justify-center w-full h-[80%] px-5">
+        <div className="flex flex-col w-full sm:w-fit h-fit">
+          <h1 className="w-full text-center text-4xl pb-14 font-medium">Celcat 2 ICS</h1>
+          <div className="flex flex-col sm:flex-row">
+            <input
+              className="w-full sm:w-[400px] h-[50px] border-2 pl-4 rounded-md"
+              type={"text"}
+              placeholder={"Enter your Northeastern Email"}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  CheckLinkValidity();
+                }
+              }}
             />
-          ) : (
-            <span>Generate Calendar</span>
-          )}
-        </button>
+            <button
+              className="w-full mt-5 sm:mt-0 sm:w-[175px] h-[50px] bg-blue-600 text-white sm:ml-5 rounded-md flex items-center justify-center"
+              onClick={() => {
+                CheckLinkValidity();
+              }}
+            >
+              {loading ? (
+                <Oval
+                  width={22}
+                  height={22}
+                  strokeWidth={6}
+                  color={"#ffffff"}
+                  secondaryColor={"#fefefe"}
+                />
+              ) : (
+                <span>Generate Calendar</span>
+              )}
+            </button>
+          </div>
+        </div>
       </main>
+      <footer className="absolute bottom-0 w-full h-[70px] flex items-center justify-center text-slate-300">
+        <span className="font-light">
+          Built by{" "}
+          <a
+            href="https://aidenappleby.com"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold"
+          >
+            @AidenAppleby
+          </a>
+        </span>
+      </footer>
     </div>
   );
 };
