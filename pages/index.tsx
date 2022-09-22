@@ -46,7 +46,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen overflow-hidden">
       <Toaster position="top-center" reverseOrder={false} />
       <Head>
         <title>Celcat ICS</title>
